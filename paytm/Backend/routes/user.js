@@ -3,6 +3,7 @@ const { User } = require("../db");
 const zod = require("zod");
 const jwt = require("jsonwebtoken");
 const {JWT_SECRET} = require("../config");
+const { authMiddleware } = require("../middleware");
 
 const router = express.Router();
 
@@ -36,7 +37,7 @@ router.post('/signup', signupBody,async (req,res)=>{
         lastName: req.body.lastName,
     });
     var hashedPassword = await user.createHash(password);
-    user.password_hash = hashedPassword;
+    user.password = hashedPassword;
     await user.save();
 
     const userId = user._id;
@@ -45,8 +46,22 @@ router.post('/signup', signupBody,async (req,res)=>{
 
     return res.status(200).json({message:"User added succesfully",
     token:token
+    }); 
+
+
 }); 
 
-
+const updateBody = zod.object({
+    username:zod.string().optional(),
+    firstName: zod.string().optional(),
+    lastName: zod.string().optional(),
+})
+router.put('/update',authMiddleware,async (req,res)=>{
+    const {success} = updateBody.safeParse(req.body);
+    if(!success){
+        return res.status(411).json({msg:"Error creating User/incorrect input"});
+    }
+    await User.updateOne({_id: req.userId},req.body);
+    res.json({msg:"Updated Successfully!"});
 });
 module.exports={router};
