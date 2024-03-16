@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require("bcrypt");
-mongoose.connect("your-mongoURL")
+mongoose.connect("url")
 .then(()=>{
    console.log("connected to MongoDB");
 });
@@ -32,5 +32,20 @@ userSchema.methods.validatePassword= async function(candidatePassword){
 }
  const User = mongoose.model('User',userSchema);
 
+ const AccountSchema = new mongoose.Schema({
+   userId :{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+   } ,
+   balance:{
+      type: Number,
+      required: true
+   },
 
-module.exports={User}
+ });
+
+ const Account = mongoose.model('Account',AccountSchema);
+
+
+module.exports={User,Account}
