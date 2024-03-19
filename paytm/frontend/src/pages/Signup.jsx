@@ -4,12 +4,15 @@ import { SubHeading } from "../components/SubHeading";
 import { InputBox } from "../components/InputBox";
 import { Button } from "../components/Button";
 import { ButtonWarning } from "../components/ButtonWarning";
+import axios from "axios";
+import { useNavigate } from "react-router-dom"
+
 export const Signup = () =>{
     const[firstName,setFirstName] = useState("");
     const[lastName,setLastName] = useState("");
-    const[userName,setUserName] = useState("");
+    const[username,setUserName] = useState("");
     const[password,setPassword] = useState("");
-
+    const navigate = useNavigate();
 
     return (
       <div className="bg-slate-400 h-screen flex justify-center">
@@ -33,33 +36,42 @@ export const Signup = () =>{
             />
             <InputBox
               onChange={(e) => {
-                setUserName(e.target.value);
+                setUsername(e.target.value);
               }}
-              placeholder="Revanth06@gmail.com"
+              placeholder="revanth06@gmail.com"
               label={"Email"}
             />
-            <InputBox onChange={(e) => {
-          setPassword(e.target.value)
-        }} placeholder="********" label={"Password"} />
+            <InputBox
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              placeholder="*******"
+              label={"Password"}
+            />
             <div className="pt-4">
               <Button
-                // onClick={async () => {
-                //   const response = await axios.post(
-                //     "http://localhost:3000/api/v1/user/signup",
-                //     {
-                //       username,
-                //       firstName,
-                //       lastName,
-                //       password,
-                //     }
-                //   );
-                //   localStorage.setItem("token", response.data.token);
-                //   navigate("/dashboard");
-                // }}
+                onClick={async () => {
+                  const response = await axios.post(
+                    "http://localhost:3000/api/v1/user/signup",
+                    {
+                      username,
+                      firstName,
+                      lastName,
+                      password,
+                    },
+                    
+                  );
+                  localStorage.setItem("token", response.data.token);
+                  navigate("/dashboard");
+                }}
                 label={"Sign up"}
               />
             </div>
-            <ButtonWarning label={"Already have an account?"} buttonText={"Sign in"} to={"/signin"} />
+            <ButtonWarning
+              label={"Already have an account?"}
+              buttonText={"Sign in"}
+              to={"/signin"}
+            />
           </div>
         </div>
       </div>
