@@ -38,7 +38,7 @@ export const Signup = () =>{
               onChange={(e) => {
                 setUsername(e.target.value);
               }}
-              placeholder="revanth06@gmail.com"
+              placeholder="johnDoe@gmail.com"
               label={"Email"}
             />
             <InputBox
@@ -48,25 +48,18 @@ export const Signup = () =>{
               placeholder="*******"
               label={"Password"}
             />
-            <div className="pt-4">
-              <Button
-                onClick={async () => {
-                  const response = await axios.post(
-                    "http://localhost:3000/api/v1/user/signup",
-                    {
-                      username,
-                      firstName,
-                      lastName,
-                      password,
-                    },
-                    
-                  );
-                  localStorage.setItem("token", response.data.token);
-                  navigate("/dashboard");
-                }}
-                label={"Sign up"}
-              />
-            </div>
+          <div className="pt-4">
+          <Button onClick={async () => {
+            const response = await axios.post("http://localhost:3000/api/v1/user/signup", {
+              username,
+              firstName,
+              lastName,
+              password
+            });
+            localStorage.setItem("token", response.data.token)
+            navigate("/dashboard")
+          }} label={"Sign up"} />
+        </div>
             <ButtonWarning
               label={"Already have an account?"}
               buttonText={"Sign in"}
