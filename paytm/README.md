@@ -9,7 +9,8 @@ To get started with the Payments Project, follow these steps:
 1.  Clone this repository to your local machine.
 2.  Install the necessary dependencies by running `npm install`.
 3.  Set up your database configuration.
-4.  Start the server using `npm start`.
+4.  Start the server using `node index.js` for backend.
+5. for frontend use `npm run dev`.
 
 ## Routes
 
